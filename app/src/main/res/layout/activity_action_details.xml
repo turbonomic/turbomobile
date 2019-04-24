@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingTop="20dp"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:clipToPadding="false"
+        android:paddingHorizontal="15dp"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_width="110dp"
+            android:layout_height="40dp"
+            android:text="Details"
+            android:textSize="20dp"
+            android:textStyle="bold"
+            android:textColor="@color/colorBlack"
+            android:textAlignment="textStart"
+            android:layout_margin="10dp" />
+        <TextView
+            android:id="@+id/txtActionDetails"
+            android:layout_width="240dp"
+            android:layout_height="90dp"
+            android:textColor="@color/colorBlack"
+            android:textSize="18dp"
+            android:textAlignment="textStart"
+            android:text="vm-1-2-3welcome"
+            android:layout_margin="10dp" />
+
+    </LinearLayout>
+    <LinearLayout
+        android:clipToPadding="false"
+        android:paddingHorizontal="15dp"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_width="110dp"
+            android:layout_height="50dp"
+            android:text="Type"
+            android:textSize="20dp"
+            android:textStyle="bold"
+            android:textColor="@color/colorBlack"
+            android:textAlignment="textStart"
+            android:layout_margin="10dp" />
+        <TextView
+            android:id="@+id/txtActionType"
+            android:layout_width="240dp"
+            android:layout_height="50dp"
+            android:textColor="@color/colorBlack"
+            android:textSize="18dp"
+            android:textAlignment="textStart"
+            android:text="Idle"
+            android:layout_margin="10dp" />
+
+    </LinearLayout>
+    <LinearLayout
+        android:clipToPadding="false"
+        android:paddingHorizontal="15dp"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_width="110dp"
+            android:layout_height="50dp"
+            android:text="State"
+            android:textSize="20dp"
+            android:textStyle="bold"
+            android:textColor="@color/colorBlack"
+            android:textAlignment="textStart"
+            android:layout_margin="10dp" />
+        <TextView
+            android:id="@+id/txtActionState"
+            android:layout_width="240dp"
+            android:layout_height="50dp"
+            android:textColor="@color/colorBlack"
+            android:textSize="18dp"
+            android:textAlignment="textStart"
+            android:text="Normal"
+            android:layout_margin="10dp" />
+
+    </LinearLayout>
+    <LinearLayout
+        android:clipToPadding="false"
+        android:paddingHorizontal="15dp"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_width="110dp"
+            android:layout_height="50dp"
+            android:text="Mode"
+
+            android:textSize="20dp"
+            android:textStyle="bold"
+            android:textColor="@color/colorBlack"
+            android:textAlignment="textStart"
+            android:layout_margin="10dp" />
+        <TextView
+            android:id="@+id/txtActionMode"
+            android:layout_width="240dp"
+            android:layout_height="50dp"
+            android:textColor="@color/colorBlack"
+            android:textSize="18dp"
+            android:textAlignment="textStart"
+            android:text="vcenter-v15.com"
+            android:layout_margin="10dp" />
+
+    </LinearLayout>
+    <LinearLayout
+        android:clipToPadding="false"
+        android:paddingHorizontal="15dp"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_width="110dp"
+            android:layout_height="50dp"
+            android:text="Risk"
+            android:textSize="20dp"
+            android:textStyle="bold"
+            android:textColor="@color/colorBlack"
+            android:textAlignment="textStart"
+            android:layout_margin="10dp" />
+        <TextView
+            android:id="@+id/txtActionRisk"
+            android:layout_width="240dp"
+            android:layout_height="50dp"
+            android:textColor="@color/colorBlack"
+            android:textSize="18dp"
+            android:textAlignment="textStart"
+            android:text="3"
+            android:layout_margin="10dp" />
+
+    </LinearLayout>
+    <LinearLayout
+        android:paddingTop="100dp"
+        android:clipToPadding="false"
+        android:paddingHorizontal="15dp"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <Button
+            android:id="@+id/btnDone"
+            android:layout_width="match_parent"
+            android:layout_height="49dp"
+            android:layout_marginBottom="69dp"
+            android:background="#0C9948"
+            android:text="Accept"
+            android:textColor="#FFFFFF"
+            android:textSize="22dp">
+
+        </Button>
+
+
+    </LinearLayout>
+
+</LinearLayout>

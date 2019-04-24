@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">TurboMobile</string>
+    <string name="title_activity_search">SearchActivity</string>
+    <string name="title_activity_groups">GroupsActivity</string>
+    <string name="title_activity_entities_list">EntitiesListActivity</string>
+    <string name="title_activity_entity">EntityActivity</string>
+</resources>
