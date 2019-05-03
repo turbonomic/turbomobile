@@ -25,6 +25,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private String token="";
     private String ip="";
+    private String username="";
     private boolean isConnected=false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,7 +38,7 @@ public class LoginActivity extends AppCompatActivity {
         TextView txtUsername = findViewById(R.id.txtUser);
         TextView txtPassword = findViewById(R.id.txtPass);
         TextView txtIP = findViewById(R.id.txtIP);
-        String username = txtUsername.getText().toString();
+        username = txtUsername.getText().toString();
         String password = txtPassword.getText().toString();
         ip = txtIP.getText().toString();
         Request request = RequestFactory.getInstance(
@@ -89,6 +90,7 @@ public class LoginActivity extends AppCompatActivity {
                     Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                     intent.putExtra("Cookie", token);
                     intent.putExtra("IP", ip);
+                    intent.putExtra("Username",username);
                     startActivity(intent);
                 } else {
                     Toast.makeText(LoginActivity.this, "Invalid credentials, please try again", Toast.LENGTH_LONG).show();
