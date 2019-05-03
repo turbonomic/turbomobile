@@ -102,10 +102,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         @Override
                         public void run() {
                             Double actionsCount = 0.0;
-                            final JsonNode statistics = json.get(0).path("statistics");
-                            for (JsonNode statistic : statistics){
-                                if(statistic.path("name").asText().equals("numActions")) {
-                                    actionsCount = Double.parseDouble(statistic.path("value").asText());
+                            if (!"[]".equals(resp)) {
+                                // If API response was not an empty list
+                                final JsonNode statistics = json.get(0).path("statistics");
+                                for (JsonNode statistic : statistics) {
+                                    if (statistic.path("name").asText().equals("numActions")) {
+                                        actionsCount = Double.parseDouble(statistic.path("value").asText());
+                                    }
                                 }
                             }
                             if(actionsCount > 0) {
@@ -150,10 +153,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         @Override
                         public void run() {
                             Double actionsCount = 0.0;
-                            final JsonNode statistics = json.get(0).path("statistics");
-                            for (JsonNode statistic : statistics){
-                                if(statistic.path("name").asText().equals("numActions")) {
-                                    actionsCount = Double.parseDouble(statistic.path("value").asText());
+                            if (!"[]".equals(resp)) {
+                                // If API response was not an empty list
+                                final JsonNode statistics = json.get(0).path("statistics");
+                                for (JsonNode statistic : statistics) {
+                                    if (statistic.path("name").asText().equals("numActions")) {
+                                        actionsCount = Double.parseDouble(statistic.path("value").asText());
+                                    }
                                 }
                             }
                             if(actionsCount > 0) {
@@ -180,12 +186,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 intent = new Intent(this, ActionListActivity.class);
                 intent.putExtra("Cookie",cookie);
                 intent.putExtra("IP",ip);
+                intent.putExtra("environmentType", "CLOUD");
                 startActivity(intent);
                 break;
             case R.id.cvOnPremActions:
                 intent = new Intent(this, ActionListActivity.class);
                 intent.putExtra("Cookie",cookie);
                 intent.putExtra("IP",ip);
+                intent.putExtra("environmentType", "ONPREM");
                 startActivity(intent);
                 break;
             case R.id.cvGroups:

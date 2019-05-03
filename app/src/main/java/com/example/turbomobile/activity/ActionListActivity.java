@@ -30,6 +30,7 @@ public class ActionListActivity extends AppCompatActivity {
 
     private String cookie;
     private String ip;
+    private String environmentType;
     private int criticalCounter = 0;
     private int majorCounter = 0;
     private int minorCounter = 0;
@@ -42,8 +43,8 @@ public class ActionListActivity extends AppCompatActivity {
         Request request = RequestFactory.getInstance(
                 ip,
                 "markets/Market/actions?order_by=severity&ascending=true",
-                "",
-                "GET",
+                "{\"environmentType\":\"" + environmentType + "\"}",
+                "POST",
                 cookie);
 
         OkHttpClient client = SSLCertificate.getUnsafeOkHttpClient();
@@ -130,6 +131,7 @@ public class ActionListActivity extends AppCompatActivity {
         setContentView(R.layout.activity_actions);
         cookie = getIntent().getStringExtra("Cookie");
         ip = getIntent().getStringExtra("IP");
+        environmentType = getIntent().getStringExtra("environmentType");
         initList();
     }
 }
