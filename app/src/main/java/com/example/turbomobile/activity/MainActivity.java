@@ -1,15 +1,13 @@
 package com.example.turbomobile.activity;
 
 import android.content.Intent;
-import android.graphics.Color;
-import android.media.Image;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
 import android.text.Html;
 import android.util.Log;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -19,12 +17,7 @@ import com.example.turbomobile.SSLCertificate;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -165,7 +158,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                             }
                             if(actionsCount > 0) {
                                 Long actions = Math.round(actionsCount);
-                                cloudActionsLayout.setBackgroundColor(getResources().getColor(R.color.colorCritical));
+                                cloudActionsLayout.setBackgroundColor(ContextCompat
+                                        .getColor(getApplicationContext(),R.color.colorCritical));
                                 criticalCloudActionsText.setVisibility(View.VISIBLE);
                                 criticalCloudActionsText.setText(actions.toString());
                             }

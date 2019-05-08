@@ -74,4 +74,19 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_chainStyle="spread_inside"
         app:srcCompat="@drawable/turbonomic_logo" />
+
+    <RelativeLayout
+        android:id="@+id/loadingPanel"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center" >
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="75dp"
+            android:visibility="invisible"
+            android:layout_height="75dp"
+            android:indeterminate="true" />
+    </RelativeLayout>
+
 </android.support.constraint.ConstraintLayout>
