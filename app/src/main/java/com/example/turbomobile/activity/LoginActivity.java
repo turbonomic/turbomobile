@@ -65,6 +65,7 @@ public class LoginActivity extends AppCompatActivity {
                     token = cookie;
                     Log.e("Token=",token);
                     isConnected=true;
+                    response.close();
                 }
             });
 
@@ -82,7 +83,7 @@ public class LoginActivity extends AppCompatActivity {
 
                 setToken();
                 try {
-                    Thread.sleep(2000);
+                    Thread.sleep(3000);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }

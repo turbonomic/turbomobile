@@ -69,6 +69,7 @@ public class ActionListActivity extends AppCompatActivity {
                             ((ListView)findViewById(R.id.list)).setAdapter(sa);
                         }
                     }));
+                    response.close();
                 }
             });
 
@@ -77,9 +78,19 @@ public class ActionListActivity extends AppCompatActivity {
             lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    Intent intent = new Intent(parent.getContext(), ActionDetails.class);
+                    Intent intent = new Intent(parent.getContext(), ActionsListActivity.class);
+                    String severity="";
+                    if(position == 0){
+                        severity = "CRITICAL";
+                    } else if (position == 1) {
+                        severity = "MAJOR";
+                    } else {
+                        severity = "MINOR";
+                    }
                     intent.putExtra("Cookie",cookie);
                     intent.putExtra("IP",ip);
+                    intent.putExtra("Severity",severity);
+                    intent.putExtra("environmentType",environmentType);
                     intent.putExtra("ActionUUID",actionUUID);
                     startActivity(intent);
                 }

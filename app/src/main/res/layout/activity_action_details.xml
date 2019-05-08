@@ -30,7 +30,6 @@
             android:textColor="@color/colorBlack"
             android:textSize="18dp"
             android:textAlignment="textStart"
-            android:text="vm-1-2-3welcome"
             android:layout_margin="10dp" />
 
     </LinearLayout>
@@ -56,7 +55,6 @@
             android:textColor="@color/colorBlack"
             android:textSize="18dp"
             android:textAlignment="textStart"
-            android:text="Idle"
             android:layout_margin="10dp" />
 
     </LinearLayout>
@@ -82,7 +80,6 @@
             android:textColor="@color/colorBlack"
             android:textSize="18dp"
             android:textAlignment="textStart"
-            android:text="Normal"
             android:layout_margin="10dp" />
 
     </LinearLayout>
@@ -109,7 +106,6 @@
             android:textColor="@color/colorBlack"
             android:textSize="18dp"
             android:textAlignment="textStart"
-            android:text="vcenter-v15.com"
             android:layout_margin="10dp" />
 
     </LinearLayout>
@@ -131,11 +127,10 @@
         <TextView
             android:id="@+id/txtActionRisk"
             android:layout_width="240dp"
-            android:layout_height="50dp"
+            android:layout_height="70dp"
             android:textColor="@color/colorBlack"
             android:textSize="18dp"
             android:textAlignment="textStart"
-            android:text="3"
             android:layout_margin="10dp" />
 
     </LinearLayout>

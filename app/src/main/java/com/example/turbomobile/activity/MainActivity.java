@@ -119,6 +119,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                             }
                         }
                     });
+                    response.close();
                 }
             });
 
@@ -170,6 +171,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                             }
                         }
                     });
+                    response.close();
                 }
             });
 

@@ -3,6 +3,8 @@ package com.example.turbomobile.activity;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.turbomobile.R;
@@ -24,7 +26,9 @@ public class ActionDetails extends AppCompatActivity {
     private String cookie;
     private String ip;
     private String actionUUID;
+    private boolean executable;
     private TextView txtActionDetails,txtActionMode,txtActionType,txtActionState,txtActionRisk;
+    private Button btnDone;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,7 +37,10 @@ public class ActionDetails extends AppCompatActivity {
         cookie = getIntent().getStringExtra("Cookie");
         ip = getIntent().getStringExtra("IP");
         actionUUID = getIntent().getStringExtra("ActionUUID");
+        executable = getIntent().getBooleanExtra("Executable",false);
+        btnDone = findViewById(R.id.btnDone);
 
+        btnDone.setVisibility(executable ? View.VISIBLE : View.INVISIBLE);
         txtActionDetails = (TextView) findViewById(R.id.txtActionDetails);
         txtActionMode = (TextView) findViewById(R.id.txtActionMode);
         txtActionType = (TextView) findViewById(R.id.txtActionType);
@@ -60,7 +67,6 @@ public class ActionDetails extends AppCompatActivity {
                 @Override
                 public void onResponse(Call call, Response response) throws IOException {
                     final String resp = response.body().string();
-                    Log.e("RESP=",resp);
 
                     final ObjectMapper mapper = new ObjectMapper();
                     final JsonNode json = mapper.readTree(resp);
@@ -75,6 +81,7 @@ public class ActionDetails extends AppCompatActivity {
                             txtActionRisk.setText(json.path("risk").path("description").asText());
                         }
                     });
+                    response.close();
                 }
             });
 

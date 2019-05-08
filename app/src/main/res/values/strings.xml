@@ -4,4 +4,8 @@
     <string name="title_activity_groups">GroupsActivity</string>
     <string name="title_activity_entities_list">EntitiesListActivity</string>
     <string name="title_activity_entity">EntityActivity</string>
+    <string name="title_activity_actions_list">ActionsListActivity</string>
+    <string name="tab_text_1">Pending Accept</string>
+    <string name="tab_text_2">Recommended</string>
+    <string name="tab_text_3">Accepted</string>
 </resources>
