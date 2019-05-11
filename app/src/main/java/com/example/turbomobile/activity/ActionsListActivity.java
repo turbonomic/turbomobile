@@ -3,38 +3,31 @@ package com.example.turbomobile.activity;
 import android.content.Intent;
 import android.support.design.widget.TabLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.example.turbomobile.R;
 import com.example.turbomobile.RequestFactory;
 import com.example.turbomobile.SSLCertificate;
+import com.example.turbomobile.dto.ActionDTO;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.Calendar;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -58,25 +51,20 @@ public class ActionsListActivity extends AppCompatActivity {
      * The {@link ViewPager} that will host the section contents.
      */
     private ViewPager mViewPager;
-    private static Map<String,String> pendingActionsMap,recommendedActionsMap,acceptedActionsMap;
+    private static ArrayList<ActionDTO> acceptedActionsList, pendingActionsList,recommendedActionsList;
     private String ip, cookie, severity, environmentType;
     private static ArrayAdapter pendingActionsadapter, recommendedActionsAdapter, acceptedActionsAdapter;
     private final String NO_ACTIONS = "No actions found";
 
     @Override
-    protected void onStop() {
-        pendingActionsMap = null;
-        recommendedActionsMap = null;
-        acceptedActionsMap = null;
+    protected void onDestroy() {
+        pendingActionsList = null;
+        recommendedActionsList = null;
+        acceptedActionsList = null;
         pendingActionsadapter = null;
         recommendedActionsAdapter = null;
         acceptedActionsAdapter = null;
-        super.onStop();
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
+        super.onDestroy();
     }
 
     @Override
@@ -129,12 +117,13 @@ public class ActionsListActivity extends AppCompatActivity {
 
     private void setupPendingActionsListView() {
         ListView pendingActionsListView = findViewById(R.id.pendingActionsListView);
-        final List<String> actionsListDetails = new ArrayList<String>(pendingActionsMap.values());
-
-        if(actionsListDetails.size() > 0) {
-            final List<String> actionsListUUIDs = new ArrayList<String>(pendingActionsMap.keySet());
+        if(pendingActionsList.size() > 0) {
+            ArrayList<String> actionsDetails = new ArrayList<>();
+            for(ActionDTO actionDTO : pendingActionsList) {
+                actionsDetails.add(actionDTO.getDetails());
+            }
             pendingActionsadapter = new ArrayAdapter<String>(getApplicationContext(),
-                    R.layout.activity_listview, actionsListDetails);
+                    R.layout.activity_listview, actionsDetails);
             pendingActionsListView.setAdapter(pendingActionsadapter);
 
             pendingActionsListView.setOnItemClickListener(new AdapterView.OnItemClickListener(){
@@ -142,8 +131,7 @@ public class ActionsListActivity extends AppCompatActivity {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                     Intent i = new Intent(ActionsListActivity.this, ActionDetails.class );
-                    String ActionUUID = actionsListUUIDs.get(position);
-                    i.putExtra("ActionUUID", ActionUUID);
+                    i.putExtra("ActionDTO",pendingActionsList.get(position));
                     i.putExtra("IP",ip);
                     i.putExtra("Cookie",cookie);
                     i.putExtra("Executable",true);
@@ -151,18 +139,18 @@ public class ActionsListActivity extends AppCompatActivity {
                 }
             });
         } else {
-            actionsListDetails.add(NO_ACTIONS);
+            ArrayList<String> emptyList = new ArrayList<>();
+            emptyList.add(NO_ACTIONS);
             pendingActionsadapter = new ArrayAdapter<String>(getApplicationContext(),
-                    R.layout.activity_listview, actionsListDetails);
+                    R.layout.activity_listview, emptyList);
             pendingActionsListView.setAdapter(pendingActionsadapter);
         }
     }
     private void fillPendingActionsList() {
-        if(pendingActionsMap !=null && pendingActionsMap.size() > 0){
+        if(pendingActionsList !=null && pendingActionsList.size() > 0){
             setupPendingActionsListView();
             return;
         }
-        pendingActionsMap = new HashMap<>();
         Request request = RequestFactory.getInstance(
                 ip,
                 "markets/Market/actions",
@@ -188,14 +176,14 @@ public class ActionsListActivity extends AppCompatActivity {
                         @Override
                         public void run() {
                             Double actionsCount = 0.0;
+                            pendingActionsList = new ArrayList<>();
                             if (!"[]".equals(resp)) {
                                 // If API response was not an empty list
                                 for (JsonNode action : json) {
                                     String details = action.path("details").asText();
                                     if (details != null && !details.isEmpty()) {
-                                        String uuid = action.path("uuid").asText();
-                                        //Log.e("Details",details);
-                                        pendingActionsMap.put(uuid, details);
+                                        ActionDTO actionDTO  = setActionInfo(action);
+                                        pendingActionsList.add(actionDTO);
                                     }
                                 }
                             }
@@ -213,11 +201,13 @@ public class ActionsListActivity extends AppCompatActivity {
 
     private void setupRecommendedActionsListView(){
         ListView recommendedActionsListView = findViewById(R.id.recommendedActionsListView);
-        List<String> actionsList = new ArrayList<String>(recommendedActionsMap.values());
-        if(actionsList.size() > 0) {
-            final List<String> actionsListUUIDs = new ArrayList<String>(recommendedActionsMap.keySet());
+        if(recommendedActionsList.size() > 0) {
+            ArrayList<String> actionsDetails = new ArrayList<>();
+            for(ActionDTO actionDTO : recommendedActionsList) {
+                actionsDetails.add(actionDTO.getDetails());
+            }
             recommendedActionsAdapter = new ArrayAdapter<String>(getApplicationContext(),
-                    R.layout.activity_listview, actionsList);
+                    R.layout.activity_listview, actionsDetails);
             recommendedActionsListView.setAdapter(recommendedActionsAdapter);
 
             recommendedActionsListView.setOnItemClickListener(new AdapterView.OnItemClickListener(){
@@ -225,8 +215,7 @@ public class ActionsListActivity extends AppCompatActivity {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                     Intent i = new Intent(ActionsListActivity.this, ActionDetails.class );
-                    String ActionUUID = actionsListUUIDs.get(position);
-                    i.putExtra("ActionUUID", ActionUUID);
+                    i.putExtra("ActionDTO",recommendedActionsList.get(position));
                     i.putExtra("IP",ip);
                     i.putExtra("Cookie",cookie);
                     i.putExtra("Executable",false);
@@ -234,18 +223,18 @@ public class ActionsListActivity extends AppCompatActivity {
                 }
             });
         } else {
-            actionsList.add(NO_ACTIONS);
+            ArrayList<String> emptyList = new ArrayList<>();
+            emptyList.add(NO_ACTIONS);
             recommendedActionsAdapter = new ArrayAdapter<String>(getApplicationContext(),
-                    R.layout.activity_listview, actionsList);
+                    R.layout.activity_listview, emptyList);
             recommendedActionsListView.setAdapter(recommendedActionsAdapter);
         }
     }
     private void fillRecommendedActionsList() {
-        if(recommendedActionsMap !=null && recommendedActionsMap.size() > 0){
+        if(recommendedActionsList !=null && recommendedActionsList.size() > 0){
             setupRecommendedActionsListView();
             return;
         }
-        recommendedActionsMap = new HashMap<>();
         Request request = RequestFactory.getInstance(
                 ip,
                 "markets/Market/actions",
@@ -271,14 +260,14 @@ public class ActionsListActivity extends AppCompatActivity {
                         @Override
                         public void run() {
                             Double actionsCount = 0.0;
+                            recommendedActionsList = new ArrayList<>();
                             if (!"[]".equals(resp)) {
                                 // If API response was not an empty list
                                 for (JsonNode action : json) {
                                     String details = action.path("details").asText();
                                     if (details != null && !details.isEmpty()) {
-                                        String uuid = action.path("uuid").asText();
-                                        //Log.e("Details",details);
-                                        recommendedActionsMap.put(uuid, details);
+                                        ActionDTO actionDTO  = setActionInfo(action);
+                                        recommendedActionsList.add(actionDTO);
                                     }
                                 }
                             }
@@ -296,19 +285,20 @@ public class ActionsListActivity extends AppCompatActivity {
 
     private void setupAcceptedActionsListView() {
         ListView acceptedActionsListView = findViewById(R.id.acceptedActionsListView);
-        List<String> actionsList = new ArrayList<String>(acceptedActionsMap.values());
-        if(actionsList.size() > 0) {
-            final List<String> actionsListUUIDs = new ArrayList<String>(acceptedActionsMap.keySet());
+        if(acceptedActionsList.size() > 0) {
+            ArrayList<String> actionsDetails = new ArrayList<>();
+            for(ActionDTO actionDTO : acceptedActionsList) {
+                actionsDetails.add(actionDTO.getDetails());
+            }
             acceptedActionsAdapter = new ArrayAdapter<String>(getApplicationContext(),
-                    R.layout.activity_listview, actionsList);
+                    R.layout.activity_listview, actionsDetails);
             acceptedActionsListView.setAdapter(acceptedActionsAdapter);
             acceptedActionsListView.setOnItemClickListener(new AdapterView.OnItemClickListener(){
 
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                     Intent i = new Intent(ActionsListActivity.this, ActionDetails.class );
-                    String ActionUUID = actionsListUUIDs.get(position);
-                    i.putExtra("ActionUUID", ActionUUID);
+                    i.putExtra("ActionDTO",acceptedActionsList.get(position));
                     i.putExtra("IP",ip);
                     i.putExtra("Cookie",cookie);
                     i.putExtra("Executable",false);
@@ -316,23 +306,28 @@ public class ActionsListActivity extends AppCompatActivity {
                 }
             });
         } else {
-            actionsList.add("No actions found");
+            ArrayList<String> emptyList = new ArrayList<>();
+            emptyList.add(NO_ACTIONS);
             acceptedActionsAdapter = new ArrayAdapter<String>(getApplicationContext(),
-                    R.layout.activity_listview, actionsList);
+                    R.layout.activity_listview, emptyList);
             acceptedActionsListView.setAdapter(acceptedActionsAdapter);
         }
     }
 
     private void fillAcceptedActionsList() {
-        if(acceptedActionsMap !=null && acceptedActionsMap.size() > 0){
+        if(acceptedActionsList !=null && acceptedActionsList.size() > 0){
             setupAcceptedActionsListView();
             return;
         }
-        acceptedActionsMap = new HashMap<>();
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+        String formattedDate = df.format(Calendar.getInstance().getTime());
         Request request = RequestFactory.getInstance(
                 ip,
                 "markets/Market/actions",
-                "{\"startTime\": \"2019-05-06T00:00:00+00:00\",\"environmentType\": \""+environmentType+"\",\"actionStateList\": [\"ACCEPTED\",\"FAILED\",\"SUCCEEDED\"],\"riskSeverityList\": [\""+severity+"\"]}",
+                "{\"startTime\": \""+formattedDate+"T00:00:00+00:00\"," +
+                        "\"environmentType\": \""+environmentType+"\"," +
+                        "\"actionStateList\": [\"ACCEPTED\",\"FAILED\",\"SUCCEEDED\"]," +
+                        "\"riskSeverityList\": [\""+severity+"\"]}",
                 "POST",
                 cookie);
 
@@ -353,14 +348,14 @@ public class ActionsListActivity extends AppCompatActivity {
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            Log.e("ACCEPTED",resp);
+                            acceptedActionsList = new ArrayList<>();
                             if (!"[]".equals(resp)) {
                                 // If API response was not an empty list
                                 for (JsonNode action : json) {
                                     String details = action.path("details").asText();
                                     if (details != null && !details.isEmpty()) {
-                                        String uuid = action.path("uuid").asText();
-                                        acceptedActionsMap.put(uuid, details);
+                                        ActionDTO actionDTO  = setActionInfo(action);
+                                        acceptedActionsList.add(actionDTO);
                                     }
                                 }
                             }
@@ -376,6 +371,18 @@ public class ActionsListActivity extends AppCompatActivity {
         }
     }
 
+    private ActionDTO setActionInfo(JsonNode action){
+        ActionDTO actionDTO = new ActionDTO();
+        actionDTO.setUuid(action.path("uuid").asText());
+        actionDTO.setDetails(action.path("details").asText());
+        actionDTO.setMode(action.path("actionMode").asText());
+        actionDTO.setState(action.path("actionState").asText());
+        actionDTO.setType(action.path("actionType").asText());
+        actionDTO.setId(action.path("actionID").asText());
+        actionDTO.setRiskDescription(action.path("risk")
+                .path("description").asText());
+        return actionDTO;
+    }
     /**
      * A placeholder fragment containing a simple view.
      */
