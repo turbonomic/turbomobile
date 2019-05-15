@@ -38,6 +38,7 @@ public class TargetsListActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_targets_list);
+        setTitle("Targets");
         cookie = getIntent().getStringExtra("Cookie");
         ip = getIntent().getStringExtra("IP");
         fillTargetsData();

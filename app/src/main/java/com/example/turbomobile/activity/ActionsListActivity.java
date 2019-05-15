@@ -71,6 +71,7 @@ public class ActionsListActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_actions_list);
+        setTitle("Actions");
 
         cookie = getIntent().getStringExtra("Cookie");
         ip = getIntent().getStringExtra("IP");

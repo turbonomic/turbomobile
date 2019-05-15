@@ -33,6 +33,7 @@ public class SettingsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
+        setTitle("Information");
         tvTurboVersion = (TextView) findViewById(R.id.tvTurboVersion);
         tvTurboLicense = (TextView) findViewById(R.id.tvTurboLicense);
         tvTurboInUseEntities = (TextView) findViewById(R.id.tvTurboInUseEntities);

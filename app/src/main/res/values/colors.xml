@@ -7,6 +7,7 @@
     <color name="colorWhite">#ffffff</color>
     <color name="colorMainBg">#173e43</color>
     <color name="colorMainBg2">#27a03d</color>
+    <color name="colorGreenLight">#8AEB9C</color>
     <color name="colorYellow">#fae496</color>
     <color name="colorCritical">#E81842</color>
 

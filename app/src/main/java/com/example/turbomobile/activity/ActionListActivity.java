@@ -140,6 +140,7 @@ public class ActionListActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_actions);
+        setTitle("Actions By Severity");
         cookie = getIntent().getStringExtra("Cookie");
         ip = getIntent().getStringExtra("IP");
         environmentType = getIntent().getStringExtra("environmentType");

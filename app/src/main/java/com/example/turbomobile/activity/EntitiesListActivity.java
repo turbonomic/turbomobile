@@ -41,6 +41,7 @@ public class EntitiesListActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setTitle("Entities");
         setContentView(R.layout.activity_entities_list);
         cookie = getIntent().getStringExtra("Cookie");
         ip = getIntent().getStringExtra("IP");

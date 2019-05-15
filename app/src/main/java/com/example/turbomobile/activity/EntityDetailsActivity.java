@@ -30,6 +30,7 @@ public class EntityDetailsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_entity_details);
+        setTitle("Entity Details");
         cookie = getIntent().getStringExtra("Cookie");
         entityUUID = getIntent().getStringExtra(EntitiesListActivity.EntityUUID);
         ip = getIntent().getStringExtra("IP");

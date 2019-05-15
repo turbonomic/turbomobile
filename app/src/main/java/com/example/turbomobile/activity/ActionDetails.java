@@ -30,6 +30,7 @@ public class ActionDetails extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_action_details);
+        setTitle("Action Details");
 
         cookie = getIntent().getStringExtra("Cookie");
         ip = getIntent().getStringExtra("IP");
