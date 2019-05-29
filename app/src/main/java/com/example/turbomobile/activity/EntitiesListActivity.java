@@ -33,7 +33,7 @@ public class EntitiesListActivity extends AppCompatActivity {
     private String ip;
     public String uuidGroup;
     private ArrayAdapter adapter;
-    public final static String EntityUUID = "com.example.turbomobile.activity._ID";
+    public final static String EntityUUID = "EntityUUID";
 
     private static ArrayList<String> entityNames = new ArrayList<String>();
     private static ArrayList<String> entityUUIDS = new ArrayList<>();

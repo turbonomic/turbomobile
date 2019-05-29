@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TableLayout;
 
 import com.example.turbomobile.R;
 import com.example.turbomobile.RequestFactory;
@@ -118,6 +119,8 @@ public class ActionsListActivity extends AppCompatActivity {
 
     private void setupPendingActionsListView() {
         ListView pendingActionsListView = findViewById(R.id.pendingActionsListView);
+        TabLayout tabLayout = findViewById(R.id.tabs);
+        tabLayout.getTabAt(0).setText("MANUAL ("+pendingActionsList.size()+")");
         if(pendingActionsList.size() > 0) {
             ArrayList<String> actionsDetails = new ArrayList<>();
             for(ActionDTO actionDTO : pendingActionsList) {
@@ -202,6 +205,8 @@ public class ActionsListActivity extends AppCompatActivity {
 
     private void setupRecommendedActionsListView(){
         ListView recommendedActionsListView = findViewById(R.id.recommendedActionsListView);
+        TabLayout tabLayout = findViewById(R.id.tabs);
+        tabLayout.getTabAt(1).setText("RECOMMEND ("+recommendedActionsList.size()+")");
         if(recommendedActionsList.size() > 0) {
             ArrayList<String> actionsDetails = new ArrayList<>();
             for(ActionDTO actionDTO : recommendedActionsList) {
@@ -286,6 +291,8 @@ public class ActionsListActivity extends AppCompatActivity {
 
     private void setupAcceptedActionsListView() {
         ListView acceptedActionsListView = findViewById(R.id.acceptedActionsListView);
+        TabLayout tabLayout = findViewById(R.id.tabs);
+        tabLayout.getTabAt(2).setText("ACCEPTED ("+acceptedActionsList.size()+")");
         if(acceptedActionsList.size() > 0) {
             ArrayList<String> actionsDetails = new ArrayList<>();
             for(ActionDTO actionDTO : acceptedActionsList) {

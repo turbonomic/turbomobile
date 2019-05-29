@@ -5,7 +5,20 @@
     <string name="title_activity_entities_list">EntitiesListActivity</string>
     <string name="title_activity_entity">EntityActivity</string>
     <string name="title_activity_actions_list">ActionsListActivity</string>
-    <string name="tab_text_1">Pending Accept</string>
-    <string name="tab_text_2">Recommended</string>
+    <string name="tab_text_1">Manual</string>
+    <string name="tab_text_2">Recommend</string>
     <string name="tab_text_3">Accepted</string>
+    <string name="load_balancer">Load Balancer</string>
+    <string name="virtual_application">Virtual Application</string>
+    <string name="application">Application</string>
+    <string name="virtual_machine">Virtual Machine</string>
+    <string name="database_server">Database Server</string>
+    <string name="volume">Volume</string>
+    <string name="zone">Zone</string>
+    <string name="region">Region</string>
+    <string name="title_activity_entities_and_actions">EntitiesAndActionsActivity</string>
+    <string name="action_settings">Settings</string>
+    <string name="section_format">Hello World from section: %1$d</string>
+    <string name="tab_text_entities">Entities</string>
+    <string name="tab_text_actions">Actions</string>
 </resources>

@@ -237,14 +237,14 @@
                 <ImageView
                     android:layout_width="64dp"
                     android:layout_height="64dp"
-                    android:background="@drawable/iconmonstr_gear"
+                    android:background="@drawable/iconmonstr_supplychain"
                     android:padding="10dp" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:text="Information"
+                    android:text="Supply Chain"
                     android:textSize="20dp"
                     android:textColor="@color/colorWhite"
                     android:textStyle="bold" />
