@@ -29,9 +29,9 @@ import okhttp3.Response;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
 
-    private CardView onPremActionsCard, cloudActionsCard, targetsCard, searchCard, groupsCard, settingsCard;
-    private LinearLayout onPremActionsLayout, cloudActionsLayout;
-    private TextView criticalOnPremActionsText, criticalCloudActionsText, welcomeTextView;
+    private CardView supplyChainCard, cloudActionsCard, targetsCard, searchCard, groupsCard, settingsCard;
+    private LinearLayout cloudActionsLayout;
+    private TextView criticalCloudActionsText, welcomeTextView;
     private String cookie, ip, username;
 
     @Override
@@ -40,26 +40,24 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_main);
         setTitle("Dashboard");
 
-        onPremActionsLayout = findViewById(R.id.layoutOnPremActions);
         cloudActionsLayout = findViewById(R.id.layoutCloudActions);
 
-        criticalOnPremActionsText = findViewById(R.id.txtCriticalOnPremActions);
         criticalCloudActionsText = findViewById(R.id.txtCriticalCloudActions);
         welcomeTextView = findViewById(R.id.txtWelcome);
 
-        onPremActionsCard = (CardView) findViewById(R.id.cvOnPremActions);
         cloudActionsCard = (CardView) findViewById(R.id.cvCloudActions);
         targetsCard = (CardView) findViewById(R.id.cvTargets);
         searchCard = (CardView) findViewById(R.id.cvSearch);
         groupsCard = (CardView) findViewById(R.id.cvGroups);
         settingsCard = (CardView) findViewById(R.id.cvSettings);
+        supplyChainCard = (CardView) findViewById(R.id.cvSupplyChain);
 
-        onPremActionsCard.setOnClickListener(this);
         cloudActionsCard.setOnClickListener(this);
         targetsCard.setOnClickListener(this);
         searchCard.setOnClickListener(this);
         groupsCard.setOnClickListener(this);
         settingsCard.setOnClickListener(this);
+        supplyChainCard.setOnClickListener(this);
 
         cookie = getIntent().getStringExtra("Cookie");
         ip = getIntent().getStringExtra("IP");
@@ -68,81 +66,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         String welcomeText = "Welcome, <b>"+username+"</b><br>Turbonomic Instance <b>" + ip+"</b>";
         welcomeTextView.setText(Html.fromHtml(welcomeText));
 
-        fillOnPremCriticalActionsView();
         fillCloudCriticalActionsView();
 
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu){
-        getMenuInflater().inflate(R.menu.menu_dashboard,menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item){
-        switch (item.getItemId()){
-            case R.id.btnMenuInfo:
-                Intent intent = new Intent(this, SettingsActivity.class);
-                intent.putExtra("Cookie", cookie);
-                intent.putExtra("IP", ip);
-                startActivity(intent);
-                return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
-
-    private void fillOnPremCriticalActionsView() {
-        Request request = RequestFactory.getInstance(
-                ip,
-                "markets/Market/actions/stats",
-                "{\"environmentType\":\"ONPREM\",\"riskSeverityList\":[\"CRITICAL\"]}",
-                "POST",
-                cookie);
-
-        OkHttpClient client = SSLCertificate.getUnsafeOkHttpClient();
-        try {
-            client.newCall(request).enqueue(new Callback() {
-                @Override
-                public void onFailure(Call call, IOException e) {
-                    call.cancel();
-                }
-
-                @Override
-                public void onResponse(Call call, Response response) throws IOException {
-                    final String resp = response.body().string();
-                    final ObjectMapper mapper = new ObjectMapper();
-                    final JsonNode json = mapper.readTree(resp);
-
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            Double actionsCount = 0.0;
-                            if (!"[]".equals(resp)) {
-                                // If API response was not an empty list
-                                final JsonNode statistics = json.get(0).path("statistics");
-                                for (JsonNode statistic : statistics) {
-                                    if (statistic.path("name").asText().equals("numActions")) {
-                                        actionsCount = Double.parseDouble(statistic.path("value").asText());
-                                    }
-                                }
-                            }
-                            if(actionsCount > 0) {
-                                Long actions = Math.round(actionsCount);
-                                onPremActionsLayout.setBackgroundColor(getResources().getColor(R.color.colorCritical));
-                                criticalOnPremActionsText.setVisibility(View.VISIBLE);
-                                criticalOnPremActionsText.setText(actions.toString());
-                            }
-                        }
-                    });
-                    response.close();
-                }
-            });
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     }
 
     private void fillCloudCriticalActionsView() {
@@ -209,11 +134,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 intent.putExtra("environmentType", "CLOUD");
                 startActivity(intent);
                 break;
-            case R.id.cvOnPremActions:
-                intent = new Intent(this, ActionListActivity.class);
+            case R.id.cvSupplyChain:
+                intent = new Intent(this, SupplyChainActivity.class);
                 intent.putExtra("Cookie",cookie);
                 intent.putExtra("IP",ip);
-                intent.putExtra("environmentType", "ONPREM");
                 startActivity(intent);
                 break;
             case R.id.cvGroups:
@@ -235,7 +159,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 startActivity(intent);
                 break;
             case R.id.cvSettings:
-                intent = new Intent(this, SupplyChainActivity.class);
+                intent = new Intent(this, SettingsActivity.class);
                 intent.putExtra("Cookie",cookie);
                 intent.putExtra("IP",ip);
                 startActivity(intent);
