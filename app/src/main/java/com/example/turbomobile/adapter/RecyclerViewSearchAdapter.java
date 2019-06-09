@@ -37,7 +37,6 @@ public class RecyclerViewSearchAdapter extends RecyclerView.Adapter<RecyclerView
         this.results = results;
         this.cookie = cookie;
         this.ip = ip;
-        Log.d(TAG, results.toString());
     }
 
     @NonNull

@@ -98,7 +98,6 @@ public class EntitiesListActivity extends AppCompatActivity {
                 @Override
                 public void onResponse(Call call, Response response) throws IOException {
                     final String resp = response.body().string();
-                    Log.e("RESP=",resp);
 
                     final ObjectMapper mapper = new ObjectMapper();
                     final JsonNode json = mapper.readTree(resp);

@@ -2,10 +2,8 @@ package com.example.turbomobile.activity;
 
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
@@ -28,11 +26,13 @@ public class SupplyChainActivity extends AppCompatActivity {
     String cookie,ip;
     private final String ENTITY_TYPE_VIRTUAL_MACHINE = "VirtualMachine";
     private final String ENTITY_TYPE_PHYSICAL_MACHINE = "PhysicalMachine";
-    private final String ENTITY_TYPE_DATACENTER = "Datacenter";
+    private final String ENTITY_TYPE_DATACENTER = "DataCenter";
     private final String ENTITY_TYPE_STORAGE = "Storage";
     private final String ENTITY_TYPE_APPLICATION = "Application";
+    private final String ENTITY_TYPE_VIRTUAL_APPLICATION = "VirtualApplication";
     private final String ENTITY_TYPE_LOAD_BALANCER = "LoadBalancer";
     private final String ENTITY_TYPE_DATABASE_SERVER = "DatabaseServer";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,6 +42,7 @@ public class SupplyChainActivity extends AppCompatActivity {
         ip = getIntent().getStringExtra("IP");
         getSupplyChainData();
     }
+
     private void getSupplyChainData() {
         Request request = RequestFactory.getInstance(
                 ip,
@@ -62,7 +63,6 @@ public class SupplyChainActivity extends AppCompatActivity {
                 public void onResponse(Call call, Response response) throws IOException {
                     final String resp = response.body().string();
                     response.body().close();
-                    Log.e("SC_RESP=",resp);
 
                     final ObjectMapper mapper = new ObjectMapper();
                     final JsonNode json = mapper.readTree(resp);
@@ -83,7 +83,19 @@ public class SupplyChainActivity extends AppCompatActivity {
                                 }
                             });
 
-                            setDonutDetails(json,"VirtualApplication", R.id.btnVirtualApplication);
+                            Button btnVAPP = setDonutDetails(json,ENTITY_TYPE_VIRTUAL_APPLICATION, R.id.btnVirtualApplication);
+                            btnVAPP.setOnClickListener(new View.OnClickListener(){
+                                @Override
+                                public void onClick(View view){
+                                    Intent i = new Intent(SupplyChainActivity.this,
+                                            EntitiesAndActionsActivity.class );
+                                    i.putExtra("EntityType",ENTITY_TYPE_VIRTUAL_APPLICATION);
+                                    i.putExtra("IP",ip);
+                                    i.putExtra("Cookie",cookie);
+                                    startActivity(i);
+                                }
+                            });
+
                             Button btnLB = setDonutDetails(json,ENTITY_TYPE_LOAD_BALANCER, R.id.btnLoadBalancer);
                             btnLB.setOnClickListener(new View.OnClickListener(){
                                 @Override
@@ -97,7 +109,19 @@ public class SupplyChainActivity extends AppCompatActivity {
                                 }
                             });
 
-                            setDonutDetails(json,"Application", R.id.btnApplication);
+                            Button btnAPP = setDonutDetails(json,ENTITY_TYPE_APPLICATION, R.id.btnApplication);
+                            btnAPP.setOnClickListener(new View.OnClickListener(){
+                                @Override
+                                public void onClick(View view){
+                                    Intent i = new Intent(SupplyChainActivity.this,
+                                            EntitiesAndActionsActivity.class );
+                                    i.putExtra("EntityType",ENTITY_TYPE_APPLICATION);
+                                    i.putExtra("IP",ip);
+                                    i.putExtra("Cookie",cookie);
+                                    startActivity(i);
+                                }
+                            });
+
                             Button btnDBS =  setDonutDetails(json,ENTITY_TYPE_DATABASE_SERVER, R.id.btnDatabaseServer);
                             btnDBS.setOnClickListener(new View.OnClickListener(){
                                 @Override
@@ -112,13 +136,46 @@ public class SupplyChainActivity extends AppCompatActivity {
                             });
 
                             // TODO: Change to Zone
-                            setDonutDetails(json,"PhysicalMachine", R.id.btnZone);
+                            Button btnPM = setDonutDetails(json,ENTITY_TYPE_PHYSICAL_MACHINE, R.id.btnZone);
+                            btnPM.setOnClickListener(new View.OnClickListener(){
+                                @Override
+                                public void onClick(View view){
+                                    Intent i = new Intent(SupplyChainActivity.this,
+                                            EntitiesAndActionsActivity.class );
+                                    i.putExtra("EntityType",ENTITY_TYPE_PHYSICAL_MACHINE);
+                                    i.putExtra("IP",ip);
+                                    i.putExtra("Cookie",cookie);
+                                    startActivity(i);
+                                }
+                            });
 
                             // TODO: Change to Region
-                            setDonutDetails(json,"DataCenter", R.id.btnRegion);
+                            Button btnDC = setDonutDetails(json,ENTITY_TYPE_DATACENTER, R.id.btnRegion);
+                            btnDC.setOnClickListener(new View.OnClickListener(){
+                                @Override
+                                public void onClick(View view){
+                                    Intent i = new Intent(SupplyChainActivity.this,
+                                            EntitiesAndActionsActivity.class );
+                                    i.putExtra("EntityType",ENTITY_TYPE_DATACENTER);
+                                    i.putExtra("IP",ip);
+                                    i.putExtra("Cookie",cookie);
+                                    startActivity(i);
+                                }
+                            });
 
                             // TODO: Change to Volume
-                            setDonutDetails(json,"Storage", R.id.btnVolume);
+                            Button btnST = setDonutDetails(json,ENTITY_TYPE_STORAGE, R.id.btnVolume);
+                            btnST.setOnClickListener(new View.OnClickListener(){
+                                @Override
+                                public void onClick(View view){
+                                    Intent i = new Intent(SupplyChainActivity.this,
+                                            EntitiesAndActionsActivity.class );
+                                    i.putExtra("EntityType",ENTITY_TYPE_STORAGE);
+                                    i.putExtra("IP",ip);
+                                    i.putExtra("Cookie",cookie);
+                                    startActivity(i);
+                                }
+                            });
                         }
                     });
 

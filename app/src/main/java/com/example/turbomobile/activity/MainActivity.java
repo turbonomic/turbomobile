@@ -31,8 +31,8 @@ import okhttp3.Response;
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
 
     private CardView supplyChainCard, cloudActionsCard, targetsCard, searchCard, groupsCard, settingsCard;
-    private LinearLayout cloudActionsLayout, onPremActionsLayout;
-    private TextView criticalCloudActionsText, welcomeTextView, criticalOnPremActionsText;
+    private LinearLayout cloudActionsLayout;
+    private TextView criticalCloudActionsText, welcomeTextView;
     private String cookie, ip, username;
 
     @Override
@@ -100,7 +100,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                             Log.e("RESP=", resp);
                         }
                     });
-                Toast.makeText(this, "Successfully logged out", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(this, LoginActivity.class);
                 //Clear the current activity by setting the flags
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
@@ -112,58 +111,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 }
     }
         return super.onOptionsItemSelected(item);
-    }
-
-    private void fillOnPremCriticalActionsView() {
-        Request request = RequestFactory.getInstance(
-                ip,
-                "markets/Market/actions/stats",
-                "{\"environmentType\":\"ONPREM\",\"riskSeverityList\":[\"CRITICAL\"]}",
-                "POST",
-                cookie);
-
-        OkHttpClient client = SSLCertificate.getUnsafeOkHttpClient();
-        try {
-            client.newCall(request).enqueue(new Callback() {
-                @Override
-                public void onFailure(Call call, IOException e) {
-                    call.cancel();
-                }
-
-                @Override
-                public void onResponse(Call call, Response response) throws IOException {
-                    final String resp = response.body().string();
-                    final ObjectMapper mapper = new ObjectMapper();
-                    final JsonNode json = mapper.readTree(resp);
-
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            Double actionsCount = 0.0;
-                            if (!"[]".equals(resp)) {
-                                // If API response was not an empty list
-                                final JsonNode statistics = json.get(0).path("statistics");
-                                for (JsonNode statistic : statistics) {
-                                    if (statistic.path("name").asText().equals("numActions")) {
-                                        actionsCount = Double.parseDouble(statistic.path("value").asText());
-                                    }
-                                }
-                            }
-                            if(actionsCount > 0) {
-                                Long actions = Math.round(actionsCount);
-                                onPremActionsLayout.setBackgroundColor(getResources().getColor(R.color.colorCritical));
-                                criticalOnPremActionsText.setVisibility(View.VISIBLE);
-                                criticalOnPremActionsText.setText(actions.toString());
-                            }
-                        }
-                    });
-                    response.close();
-                }
-            });
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     }
 
     private void fillCloudCriticalActionsView() {
