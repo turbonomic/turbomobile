@@ -2,6 +2,7 @@ package com.example.turbomobile.activity;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Html;
@@ -24,6 +25,10 @@ public class WelcomeActivity extends AppCompatActivity {
         getSupportActionBar().hide();
         btnOK = findViewById(R.id.btnWelcomeOK);
         txtLicense = findViewById(R.id.txtLicenseLink);
+
+        btnOK.setBackgroundColor(ContextCompat
+                .getColor(getApplicationContext(),R.color.colorGreenLight));
+        btnOK.setEnabled(false);
 
         btnOK.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -87,6 +92,9 @@ public class WelcomeActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 dialog.dismiss();
+                btnOK.setBackgroundColor(ContextCompat
+                        .getColor(getApplicationContext(),R.color.colorMainBg2));
+                btnOK.setEnabled(true);
             }
         });
         dialog.getWindow().getAttributes().width = WindowManager.LayoutParams.MATCH_PARENT;
