@@ -37,6 +37,16 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         getSupportActionBar().hide();
+        Boolean isFirstRun = getSharedPreferences("PREFERENCE", MODE_PRIVATE)
+                .getBoolean("isFirstRun", true);
+
+        if (isFirstRun) {
+            startActivity(new Intent(LoginActivity.this, WelcomeActivity.class));
+        }
+
+        getSharedPreferences("PREFERENCE", MODE_PRIVATE).edit()
+                .putBoolean("isFirstRun", false).commit();
+
         progressBar = findViewById(R.id.progressBar);
         txtUsername = findViewById(R.id.txtUser);
         txtPassword = findViewById(R.id.txtPass);
