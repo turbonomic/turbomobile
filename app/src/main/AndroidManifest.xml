@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.example.turbomobile">
+    package="com.turbonomic.turbomobile">
 
     <uses-permission android:name="android.permission.INTERNET" />
 
@@ -13,45 +13,45 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".activity.WelcomeActivity"></activity>
+        <activity android:name="com.turbonomic.turbomobile.activity.WelcomeActivity"></activity>
         <activity
-            android:name=".activity.EntitiesAndActionsActivity"
+            android:name="com.turbonomic.turbomobile.activity.EntitiesAndActionsActivity"
             android:label="@string/title_activity_entities_and_actions"
-            android:parentActivityName=".activity.SupplyChainActivity"
+            android:parentActivityName="com.turbonomic.turbomobile.activity.SupplyChainActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.example.turbomobile.activity.SupplyChainActivity" />
+                android:value="com.turbonomic.turbomobile.activity.SupplyChainActivity" />
         </activity>
-        <activity android:name=".activity.SupplyChainActivity" />
+        <activity android:name="com.turbonomic.turbomobile.activity.SupplyChainActivity" />
         <activity
-            android:name=".activity.ActionsListActivity"
+            android:name="com.turbonomic.turbomobile.activity.ActionsListActivity"
             android:label="@string/title_activity_actions_list"
-            android:parentActivityName=".activity.ActionListActivity"
+            android:parentActivityName="com.turbonomic.turbomobile.activity.ActionListActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.example.turbomobile.activity.ActionListActivity" />
+                android:value="com.turbonomic.turbomobile.activity.ActionListActivity" />
         </activity>
-        <activity android:name=".activity.ActionDetails" />
-        <activity android:name=".activity.GroupsActivity" />
-        <activity android:name=".activity.EntitiesListActivity" />
-        <activity android:name=".activity.EntityDetailsActivity" />
-        <activity android:name=".activity.TargetsListActivity" />
-        <activity android:name=".activity.ActionListActivity" />
-        <activity android:name=".activity.SettingsActivity" />
+        <activity android:name="com.turbonomic.turbomobile.activity.ActionDetails" />
+        <activity android:name="com.turbonomic.turbomobile.activity.GroupsActivity" />
+        <activity android:name="com.turbonomic.turbomobile.activity.EntitiesListActivity" />
+        <activity android:name="com.turbonomic.turbomobile.activity.EntityDetailsActivity" />
+        <activity android:name="com.turbonomic.turbomobile.activity.TargetsListActivity" />
+        <activity android:name="com.turbonomic.turbomobile.activity.ActionListActivity" />
+        <activity android:name="com.turbonomic.turbomobile.activity.SettingsActivity" />
         <activity
-            android:name=".activity.SearchActivity"
+            android:name="com.turbonomic.turbomobile.activity.SearchActivity"
             android:label="@string/title_activity_search"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".activity.LoginActivity">
+        <activity android:name="com.turbonomic.turbomobile.activity.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.MainActivity" />
+        <activity android:name="com.turbonomic.turbomobile.activity.MainActivity" />
     </application>
 
 </manifest>
